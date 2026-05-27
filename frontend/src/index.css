@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-sand text-ink antialiased;
+  font-family: Georgia, 'Times New Roman', serif;
+  margin: 0;
+}
+
+a {
+  @apply text-inherit no-underline;
+}
+
+#root {
+  min-height: 100vh;
+}
