@@ -1,12 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+import { PortfolioProvider } from '../context/PortfolioContext';
 import AppRoutes from '../app/routes';
 
 async function renderRoute(initialEntries = ['/']) {
   render(
     <MemoryRouter initialEntries={initialEntries}>
-      <AppRoutes />
+      <PortfolioProvider>
+        <AppRoutes />
+      </PortfolioProvider>
     </MemoryRouter>
   );
 
@@ -33,4 +36,24 @@ test('navigates to a product page from the dropdown', async () => {
   await user.click(screen.getByRole('menuitem', { name: /field notes/i }));
   expect(await screen.findByRole('heading', { name: /field notes/i })).toBeInTheDocument();
   expect(screen.getByText(/frontend systems and content modeling/i, { exact: false })).toBeInTheDocument();
+});
+
+test('shows validation warnings for unsafe contact input', async () => {
+  const user = userEvent.setup();
+  await renderRoute();
+  await user.type(screen.getByLabelText(/name/i), '<script>');
+  await user.type(screen.getByLabelText(/email/i), 'jason@campbell.dev');
+  await user.type(screen.getByLabelText(/message/i), 'Portfolio note');
+  await user.click(screen.getByRole('button', { name: /send message/i }));
+  expect(await screen.findByRole('status')).toHaveTextContent(/fix the highlighted fields/i);
+});
+
+test('submits the contact form successfully', async () => {
+  const user = userEvent.setup();
+  await renderRoute();
+  await user.type(screen.getByLabelText(/name/i), 'Jason Campbell');
+  await user.type(screen.getByLabelText(/email/i), 'jason@campbell.dev');
+  await user.type(screen.getByLabelText(/message/i), 'Portfolio update request');
+  await user.click(screen.getByRole('button', { name: /send message/i }));
+  expect(await screen.findByText(/ready for future storage/i)).toBeInTheDocument();
 });

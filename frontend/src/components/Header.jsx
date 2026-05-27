@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { projects } from '../../../shared/projects';
+import { usePortfolio } from '../context/PortfolioContext';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const { loading, projects } = usePortfolio();
 
   return (
     <header className="border-b border-stone-300 bg-white/90 backdrop-blur">
@@ -28,6 +29,7 @@ export default function Header() {
                 className="absolute right-0 top-14 w-64 rounded border border-stone-300 bg-white p-2 shadow-lg"
                 role="menu"
               >
+                {loading && <span className="block px-3 py-2 text-xs text-stone-500">Loading...</span>}
                 {projects.map((project) => (
                   <Link
                     className="block rounded px-3 py-2 text-xs hover:bg-stone-100"

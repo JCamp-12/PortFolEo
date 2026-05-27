@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
-import { projects } from '../../../shared/projects';
+import { usePortfolio } from '../context/PortfolioContext';
 
 function DetailRow({ label, value }) {
   return (
@@ -12,7 +12,16 @@ function DetailRow({ label, value }) {
 
 export default function ProjectPage() {
   const { slug } = useParams();
+  const { error, loading, projects } = usePortfolio();
   const project = projects.find((item) => item.slug === slug);
+
+  if (loading) {
+    return <p className="text-sm text-stone-600">Loading project...</p>;
+  }
+
+  if (error) {
+    return <p className="text-sm text-red-700">{error}</p>;
+  }
 
   if (!project) {
     return (
