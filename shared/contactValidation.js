@@ -12,7 +12,7 @@ const fieldRules = {
   message: {
     label: 'Message',
     maxLength: 240,
-    pattern: /^[A-Za-z0-9 .,@_-]+$/
+    pattern: /^[A-Za-z0-9 .,@_?-]+$/
   }
 };
 

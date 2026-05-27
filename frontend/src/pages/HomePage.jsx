@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import ContactForm from '../components/ContactForm';
 import ProjectCard from '../components/ProjectCard';
+import QuickChatPrompt from '../components/QuickChatPrompt';
 import { usePortfolio } from '../context/PortfolioContext';
 
 const defaultStatus = 'Checking backend status...';
@@ -38,15 +38,16 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-        {loading && <p className="text-sm text-stone-600">Loading projects...</p>}
-        {!loading && error && <p className="text-sm text-red-700">{error}</p>}
-        {!loading &&
-          !error &&
-          projects.map((project) => <ProjectCard key={project.slug} project={project} />)}
+      <div className="grid gap-8 lg:grid-cols-[320px_1fr]">
+        <QuickChatPrompt />
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          {loading && <p className="text-sm text-stone-600">Loading projects...</p>}
+          {!loading && error && <p className="text-sm text-red-700">{error}</p>}
+          {!loading &&
+            !error &&
+            projects.map((project) => <ProjectCard key={project.slug} project={project} />)}
+        </div>
       </div>
-
-      <ContactForm />
     </section>
   );
 }

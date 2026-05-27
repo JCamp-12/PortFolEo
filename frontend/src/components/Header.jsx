@@ -44,6 +44,7 @@ export default function Header() {
               </div>
             )}
           </div>
+          <Link to="/contact">Contact</Link>
         </nav>
       </div>
     </header>
