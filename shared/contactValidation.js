@@ -2,27 +2,41 @@ const fieldRules = {
   name: {
     label: 'Name',
     maxLength: 60,
-    pattern: /^[A-Za-z0-9 ]+$/
+    pattern: /^[A-Za-z0-9 .'-]+$/,
+    message: 'Name can use letters, numbers, spaces, apostrophes, periods, and hyphens.'
   },
   email: {
     label: 'Email',
     maxLength: 80,
-    pattern: /^[A-Za-z0-9@._-]+$/
+    pattern: /^[A-Za-z0-9@._+-]+$/,
+    message: 'Email can only use standard email characters.'
   },
   message: {
     label: 'Message',
     maxLength: 240,
-    pattern: /^[A-Za-z0-9 .,@_?-]+$/
+    pattern: /^[^<>]+$/,
+    message: 'Message can use normal punctuation, but not angle brackets.'
   }
 };
 
-function sanitizeValue(value) {
+function sanitizeLineValue(value) {
   return String(value || '').trim().replace(/\s+/g, ' ');
+}
+
+function sanitizeMessageValue(value) {
+  return String(value || '')
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .trim();
+}
+
+function sanitizeValue(key, value) {
+  return key === 'message' ? sanitizeMessageValue(value) : sanitizeLineValue(value);
 }
 
 function validateField(key, value) {
   const rule = fieldRules[key];
-  const sanitized = sanitizeValue(value);
+  const sanitized = sanitizeValue(key, value);
 
   if (!sanitized) {
     return `${rule.label} is required.`;
@@ -33,7 +47,7 @@ function validateField(key, value) {
   }
 
   if (!rule.pattern.test(sanitized)) {
-    return `${rule.label} can only use letters, numbers, spaces, and basic email-safe symbols.`;
+    return rule.message;
   }
 
   return '';
@@ -41,9 +55,9 @@ function validateField(key, value) {
 
 export function normalizeContactPayload(payload) {
   return {
-    name: sanitizeValue(payload?.name),
-    email: sanitizeValue(payload?.email),
-    message: sanitizeValue(payload?.message)
+    name: sanitizeValue('name', payload?.name),
+    email: sanitizeValue('email', payload?.email),
+    message: sanitizeValue('message', payload?.message)
   };
 }
 
