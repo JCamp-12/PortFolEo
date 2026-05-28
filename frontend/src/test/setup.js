@@ -30,7 +30,7 @@ global.fetch = (url, options = {}) => {
                 errors: { name: 'Name can only use letters, numbers, spaces, and basic email-safe symbols.' }
               }
             : {
-                message: `Thanks, ${payload.name}. Your note is ready for future storage.`
+                message: `Thanks, ${payload.name}. Your note has been saved.`
               }
         )
     });

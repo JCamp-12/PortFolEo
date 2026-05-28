@@ -58,7 +58,7 @@ export default function ContactForm() {
         <h2 className="text-3xl">Start a conversation</h2>
         <p className="max-w-2xl text-sm leading-7 text-stone-700">
           This form stays intentionally strict for now. Plain text only, clear warnings,
-          and a backend-ready shape for future Mongo storage.
+          and a real Postgres-backed path through Prisma.
         </p>
       </div>
 

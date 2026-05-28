@@ -62,7 +62,7 @@ test('submits the contact form successfully', async () => {
   await user.type(screen.getByLabelText(/email/i), 'jason@campbell.dev');
   await user.type(screen.getByLabelText(/message/i), 'Portfolio update request');
   await user.click(screen.getByRole('button', { name: /send message/i }));
-  expect(await screen.findByText(/ready for future storage/i)).toBeInTheDocument();
+  expect(await screen.findByText(/has been saved/i)).toBeInTheDocument();
 });
 
 test('submits a quick question from the homepage chat prompt', async () => {
@@ -74,5 +74,5 @@ test('submits a quick question from the homepage chat prompt', async () => {
   await user.type(screen.getByLabelText(/email/i), 'jason@campbell.dev');
   await user.type(screen.getByLabelText(/question/i), 'Can we talk about Signal Stack?');
   await user.click(screen.getByRole('button', { name: /send question/i }));
-  expect(await screen.findByText(/ready for future storage/i)).toBeInTheDocument();
+  expect(await screen.findByText(/has been saved/i)).toBeInTheDocument();
 });
