@@ -1,16 +1,15 @@
-import mongoose from 'mongoose';
+import { getPrismaClient } from '../lib/prisma.js';
 import { env } from './env.js';
 
 export async function connectDatabase() {
-  if (!env.mongoUri) {
-    console.log('MongoDB not configured. Skipping database connection.');
-    return;
+  if (!env.databaseUrl) {
+    throw new Error('DATABASE_URL is not configured.');
   }
 
-  try {
-    await mongoose.connect(env.mongoUri);
-    console.log('MongoDB connected.');
-  } catch (error) {
-    console.error('MongoDB connection failed:', error.message);
-  }
+  await getPrismaClient().$connect();
+  console.log('PostgreSQL connected through Prisma.');
+}
+
+export async function disconnectDatabase() {
+  await getPrismaClient().$disconnect();
 }
