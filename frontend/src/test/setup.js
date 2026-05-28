@@ -27,7 +27,7 @@ global.fetch = (url, options = {}) => {
           isUnsafe
             ? {
                 message: 'Please fix the highlighted fields and try again.',
-                errors: { name: 'Name can only use letters, numbers, spaces, and basic email-safe symbols.' }
+                errors: { name: 'Name can use letters, numbers, spaces, apostrophes, periods, and hyphens.' }
               }
             : {
                 message: `Thanks, ${payload.name}. Your note has been saved.`

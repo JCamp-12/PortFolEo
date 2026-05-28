@@ -28,7 +28,7 @@ export default function ContactForm() {
       setErrors(result.errors);
       setStatus({
         tone: 'fail',
-        message: 'Please use plain text only and fix the highlighted fields.'
+        message: 'Please fix the highlighted fields and try again.'
       });
       return;
     }

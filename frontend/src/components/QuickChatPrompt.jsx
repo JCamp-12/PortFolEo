@@ -29,7 +29,7 @@ export default function QuickChatPrompt() {
 
     if (!result.isValid) {
       setErrors(result.errors);
-      setStatus('Please keep it plain text and fix the highlighted fields.');
+      setStatus('Please fix the highlighted fields and try again.');
       return;
     }
 
